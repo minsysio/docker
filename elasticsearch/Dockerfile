@@ -1,19 +1,15 @@
 
 FROM minsysio/oracle-jdk8
+MAINTAINER Laurent Vincentelli <lvi@minsys.io>
 
-# grab gosu for easy step-down from root
-ENV GOSU_VERSION 1.7
-RUN set -x \
-	&& wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
-	&& wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
-	&& export GNUPGHOME="$(mktemp -d)" \
-	&& gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
-	&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
-	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
-	&& chmod +x /usr/local/bin/gosu \
-	&& gosu nobody true
 
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-repositories.html
+#Avant tout copier 50_elasticsearch dans /etc/my_init.d/50_elasticsearch pour que my_init puisse lancer elasticsearch au démarrage
+#Installer els
+##apt-get
+##creer l'arborescene 
+
+# Inspired by : gerardorochin on github. see below. 
+# https://github.com/komljen/dockerfile-examples
 # https://packages.elasticsearch.org/GPG-KEY-elasticsearch
 RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 46095ACC8548582C1A2699A9D27D666CD88E42B4
 
@@ -28,9 +24,12 @@ RUN set -x \
 	&& apt-get install -y --no-install-recommends elasticsearch=$ELASTICSEARCH_VERSION \
 	&& rm -rf /var/lib/apt/lists/*
 
+#Neccessaire ??? 
 ENV PATH /usr/share/elasticsearch/bin:$PATH
 
+#Se placer dans ce répertoire pour creer arbo 
 WORKDIR /usr/share/elasticsearch
+
 
 RUN set -ex \
 	&& for path in \
@@ -43,12 +42,17 @@ RUN set -ex \
 		chown -R elasticsearch:elasticsearch "$path"; \
 	done
 
+#ok rapatrier la config 
 COPY config ./config
 
+#Mapper les volumes data, log, config sur l'hote dans /opt/elasticsearch/*
 VOLUME /usr/share/elasticsearch/data
 
-COPY docker-entrypoint.sh /
+#NON, my_init s'en charge 
+#COPY docker-entrypoint.sh /
 
 EXPOSE 9200 9300
+
+#
 #ENTRYPOINT ["/docker-entrypoint.sh"]
 #CMD ["elasticsearch"]

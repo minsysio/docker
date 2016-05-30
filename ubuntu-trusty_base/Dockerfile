@@ -1,5 +1,4 @@
 # Thx @ phusion & phusion/baseimage as base image for this base image 
-
 FROM minsysio/ubuntu-trusty_base:0.1
 MAINTAINER Laurent Vincentelli <lvi@minsys.io>
 
@@ -7,7 +6,7 @@ MAINTAINER Laurent Vincentelli <lvi@minsys.io>
 CMD ["/sbin/my_init"]
 
 # ...put your own build instructions here...
-#/sbin/my_init starts sshd, so expose default ssh port via docker proxy 
+# /sbin/my_init starts sshd, so expose default ssh port via docker proxy 
 EXPOSE 22 
 # ...End of your own build instructions here...
 
