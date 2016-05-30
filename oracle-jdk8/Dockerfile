@@ -4,7 +4,7 @@ FROM minsysio/ubuntu-trusty_base:0.2
 MAINTAINER Laurent Vincentelli <lvi@minsys.io>
 
 # Use baseimage-docker's init system.
-CMD ["/sbin/my_init"]
+# CMD ["/sbin/my_init"]
 # ...put your own build instructions here...
 
 #Begin of Oracle Java 8 install 
