@@ -1,6 +1,6 @@
 # Thx @ phusion & phusion/baseimage as base image for this base image 
 
-FROM minsysio/cloud-ubu_base:0.2
+FROM minsysio/ubuntu-trusty_base:0.1
 MAINTAINER Laurent Vincentelli <lvi@minsys.io>
 
 # Use baseimage-docker's init system.
