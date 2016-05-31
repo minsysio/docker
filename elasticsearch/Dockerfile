@@ -3,22 +3,20 @@ FROM minsysio/oracle-jdk8:0.1
 MAINTAINER Laurent Vincentelli <lvi@minsys.io>
 #Load elasticsearch default variables to be used by elasticsearch startup script
 COPY default /etc/default/
-#Load the elasticsearch startup script
+#Load the elasticsearch startup script, yep done w/ the phusion's my_init. 
 COPY my_init /etc/my_init.d/
 # Inspired by : gerardorochin on github. see below. 
 # https://github.com/komljen/dockerfile-examples
-# https://packages.elasticsearch.org/GPG-KEY-elasticsearch
+# As usual thx to DigitalOcean tutorials, Mitchell Anicas : https://www.digitalocean.com/community/users/manicas  
 RUN wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 
-ENV ELASTICSEARCH_MAJOR 2.3
-ENV ELASTICSEARCH_VERSION 2.3.3
 ENV ELASTICSEARCH_REPO_BASE http://packages.elastic.co/elasticsearch/2.x/debian
 
-RUN echo "deb $ELASTICSEARCH_REPO_BASE stable main" > /etc/apt/sources.list.d/elasticsearch.list
+RUN echo "deb $ELASTICSEARCH_REPO_BASE stable main" > /etc/apt/sources.list.d/elasticsearch-2.x.list
 
 RUN set -x \
 	&& apt-get update \
-	&& apt-get install -y --no-install-recommends elasticsearch=$ELASTICSEARCH_VERSION \
+	&& apt-get install -y elasticsearch \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV PATH /usr/share/elasticsearch/bin:$PATH
