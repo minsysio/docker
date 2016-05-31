@@ -10,9 +10,7 @@ COPY my_init /etc/my_init.d/
 # As usual thx to DigitalOcean tutorials, Mitchell Anicas : https://www.digitalocean.com/community/users/manicas  
 RUN wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 
-ENV ELASTICSEARCH_REPO_BASE http://packages.elastic.co/elasticsearch/2.x/debian
-
-RUN echo "deb $ELASTICSEARCH_REPO_BASE stable main" > /etc/apt/sources.list.d/elasticsearch-2.x.list
+RUN echo "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main" > /etc/apt/sources.list.d/elasticsearch-2.x.list
 
 RUN set -x \
 	&& apt-get update \
