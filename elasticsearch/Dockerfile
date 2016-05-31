@@ -2,7 +2,7 @@
 FROM minsysio/oracle-jdk8
 MAINTAINER Laurent Vincentelli <lvi@minsys.io>
 
-#Load elasticsearch default variables to be used by elasticsearch startup scrip
+#Load elasticsearch default variables to be used by elasticsearch startup script
 COPY default /etc/default/
 #Load the elasticsearch startup script
 COPY my_init /etc/my_init.d/
