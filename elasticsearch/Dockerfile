@@ -1,5 +1,5 @@
 
-FROM minsysio/oracle-jdk8
+FROM minsysio/oracle-jdk8:0.1
 MAINTAINER Laurent Vincentelli <lvi@minsys.io>
 
 #Load elasticsearch default variables to be used by elasticsearch startup script
