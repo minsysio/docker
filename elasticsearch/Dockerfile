@@ -1,16 +1,16 @@
 
-FROM minsysio/elasticsearch-tmp:0.4
+FROM minsysio/elasticsearch-tmp:0.1
 MAINTAINER Laurent Vincentelli <lvi@minsys.io>
 #Load elasticsearch default variables to be used by elasticsearch startup script. Can be used to overide startup script provided variables. 
 COPY default /etc/default/
-# As usual : 
-# Thx to phusion and phusion/baseimage ! 
+# As usual : Thx to phusion and phusion/baseimage ! 
 # Thx to DigitalOcean's tutorials, Mitchell Anicas : https://www.digitalocean.com/community/users/manicas  
 # This, to always keep the latest 2.x elasticsearch version.  
 RUN set -x \
 	&& apt-get update \
 	&& apt-get upgrade -y elasticsearch \
 	&& rm -rf /var/lib/apt/lists/*
+
 WORKDIR /usr/share/elasticsearch
 
 RUN set -ex \
@@ -24,7 +24,7 @@ RUN set -ex \
 		chown -R elasticsearch:elasticsearch "$path"; \
 	done
 #elasticsearch.yml & logging.yml import. 
-COPY config ./config/
+COPY config /usr/share/elasticsearch/config/
 #config, data, log, volume mapping  ( minion : /opt/elasticsearch/* ).  
 VOLUME ["/usr/share/elasticsearch/config", "/usr/share/elasticsearch/data", "/usr/share/elasticsearch/logs"]
 #API REST JSON + HTTP Transport
