@@ -4,21 +4,15 @@ MAINTAINER Laurent Vincentelli <lvi@minsys.io>
 #Load elasticsearch default variables to be used by elasticsearch startup script
 COPY default /etc/default/
 #Load the elasticsearch startup script, yep done w/ the phusion's my_init. 
-COPY my_init /etc/my_init.d/
-# Inspired by : gerardorochin on github. see below. 
-# https://github.com/komljen/dockerfile-examples
+#COPY my_init /etc/my_init.d/
 # As usual thx to DigitalOcean tutorials, Mitchell Anicas : https://www.digitalocean.com/community/users/manicas  
-RUN wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-
-RUN echo "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main" > /etc/apt/sources.list.d/elasticsearch-2.x.list
-
+#RUN wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+#RUN echo "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main" > /etc/apt/sources.list.d/elasticsearch-2.x.list
+#Always keep the latest 2.x elasticsearch version 
 RUN set -x \
 	&& apt-get update \
-	&& apt-get install -y elasticsearch \
+	&& apt-get upgrade -y elasticsearch \
 	&& rm -rf /var/lib/apt/lists/*
-
-ENV PATH /usr/share/elasticsearch/bin:$PATH
-
 WORKDIR /usr/share/elasticsearch
 
 RUN set -ex \

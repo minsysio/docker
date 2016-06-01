@@ -94,6 +94,7 @@ index.number_of_replicas: 1
 #
 network.host: 0.0.0.0
 #
+# to test : network.host: [_eth0_, _local_]
 # Set a custom port for the node to node communication (9300 by default):
 #
 # transport.tcp.port: 9300
