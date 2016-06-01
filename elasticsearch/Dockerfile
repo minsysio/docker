@@ -24,7 +24,7 @@ RUN set -ex \
 		chown -R elasticsearch:elasticsearch "$path"; \
 	done
 #elasticsearch.yml & logging.yml import. 
-COPY config ./config
+COPY config ./config/
 #config, data, log, volume mapping  ( minion : /opt/elasticsearch/* ).  
 VOLUME ["/usr/share/elasticsearch/config", "/usr/share/elasticsearch/data", "/usr/share/elasticsearch/logs"]
 #API REST JSON + HTTP Transport
