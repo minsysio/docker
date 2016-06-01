@@ -36,11 +36,6 @@ if [ -r /etc/default/rcS ]; then
         . /etc/default/rcS
 fi
 
-#Source elasticsearch global variables of /etc/default/elasticsearch
-if [ -r /etc/default/elasticsearch ]; then
-        . /etc/default/elasticsearch
-fi
-  
 # Process display name, Description (Logging..), Daemon name, where is the actual executable, & OPTs to be launched, PID infos & $PATH 
 NAME=elasticsearch
 DESC="Elasticsearch Server, running on cloud.minsys.io"
@@ -60,6 +55,7 @@ DAEMON_OPTS="-d -p $PID_FILE --default.path.home=$ES_HOME --default.path.logs=$L
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin
 
+#Elasticsearch variables. Can be overriden by providing info in /etc/default/elasticsearch.  
 ES_HEAP_SIZE=2g
 ES_USER=elasticsearch
 ES_GROUP=elasticsearch
@@ -67,7 +63,14 @@ MAX_OPEN_FILES=65535
 MAX_LOCKED_MEMORY=unlimited
 MAX_MAP_COUNT=262144
 ES_STARTUP_SLEEP_TIME=5
-#Export /etc/default/elasticsearch variables, could be usefull for Ansible. 
+ 
+#Source elasticsearch global variables of /etc/default/elasticsearch, this will override the previous config. 
+#By default this is a no content file. 
+if [ -r /etc/default/elasticsearch ]; then
+        . /etc/default/elasticsearch
+fi
+
+#Export /etc/default/elasticsearch variables, could be usefull for Ansible.
 export ES_HOME
 export CONF_DIR
 export DATA_DIR  
@@ -99,17 +102,11 @@ checkJava() {
 case "$1" in
   start)
         checkJava
-
- #       if [ -n "$MAX_LOCKED_MEMORY" -a -z "$ES_HEAP_SIZE" ]; then
- #               log_failure_msg "MAX_LOCKED_MEMORY is set - ES_HEAP_SIZE must also be set"
- #               exit 1
- #       fi
-
         log_daemon_msg "Starting $DESC"
         pid=`pidofproc -p $PID_FILE elasticsearch`
         
         if [ -n "$pid" ] ; then
-                log_begin_msg "Already running."
+                log_begin_msg "PID Already running. Please check elasticsearch status in /var/run/elasticsearch"
                 log_end_msg 0
                 exit 0
         fi
@@ -125,21 +122,6 @@ case "$1" in
         if [ -n "$PID_FILE" ] && [ ! -e "$PID_FILE" ]; then
                 touch "$PID_FILE" && chown "$ES_USER":"$ES_GROUP" "$PID_FILE"
         fi
-
-#       Will be done by ulimiting on the minion..
-#        if [ -n "$MAX_OPEN_FILES" ]; then
-#              ulimit -n $MAX_OPEN_FILES
-#        fi
-
-#       Will be done by disabling swap on the minion..        
-#        if [ -n "$MAX_LOCKED_MEMORY" ]; then
-#                ulimit -l $MAX_LOCKED_MEMORY
-#        fi
-
-#       Must be done on the minion ! Read-only file system.. 
-#        if [ -n "$MAX_MAP_COUNT" -a -f /proc/sys/vm/max_map_count ]; then 
-#                sysctl -q -w vm.max_map_count=$MAX_MAP_COUNT
-#        fi
 
         # Start Daemon
         start-stop-daemon -d $ES_HOME --start -b --user "$ES_USER" -c "$ES_USER" --pidfile "$PID_FILE" --exec $DAEMON -- $DAEMON_OPTS
@@ -192,6 +174,7 @@ case "$1" in
         fi
         $0 start
         ;;
+
   *)
         log_success_msg "Usage: $0 {start|stop|restart|force-reload|status}"
         exit 1
