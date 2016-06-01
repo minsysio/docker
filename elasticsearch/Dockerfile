@@ -1,5 +1,5 @@
 
-FROM minsysio/elasticsearch-tmp:0.6
+FROM minsysio/elasticsearch-v2:0.2
 # As usual : Thx to phusion and phusion/baseimage ! 
 # Thx to DigitalOcean's tutorials, Mitchell Anicas : https://www.digitalocean.com/community/users/manicas 
 MAINTAINER Laurent Vincentelli <lvi@minsys.io>
