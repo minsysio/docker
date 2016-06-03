@@ -1,5 +1,5 @@
 
-FROM minsysio/elasticsearch-v2:source
+FROM minsysio/elasticsearch-tmp:0.6
 # As usual : Thx to phusion and phusion/baseimage ! 
 # Thx to DigitalOcean's tutorials, Mitchell Anicas : https://www.digitalocean.com/community/users/manicas 
 MAINTAINER Laurent Vincentelli <lvi@minsys.io>
@@ -17,3 +17,4 @@ VOLUME ["/etc/elasticsearch", "/var/lib/elasticsearch", "/var/log/elasticsearch"
 EXPOSE 9200 9300
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
