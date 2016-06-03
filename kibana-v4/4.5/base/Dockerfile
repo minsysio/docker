@@ -6,7 +6,7 @@ MAINTAINER Laurent Vincentelli <lvi@minsys.io>
 RUN set -x \
 	&& apt-get update \
 	&& apt-get upgrade -y kibana
-#Can be used to overide startup script provided variables. 
+ 
 WORKDIR /opt/kibana/
 #config volume mapping  ( minion : /opt/kibana/* ).  
 VOLUME ["/opt/kibana/config"]
