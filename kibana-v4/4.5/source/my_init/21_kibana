@@ -2,8 +2,8 @@
 
 ### BEGIN INIT INFO
 # Provides:             kibana at startup, my_init from phusion. 
-# Required-Start:       see /etc/init.d/elasticserach for more info 
-# Required-Stop:        see /etc/init.d/elasticserach for more info 
+# Required-Start:       see /etc/init.d/kibana for more info 
+# Required-Stop:        see /etc/init.d/kibana for more info 
 # Short-Description:    You know, for search.
 ### END INIT INFO
 
