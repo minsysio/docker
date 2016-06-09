@@ -8,7 +8,9 @@ RUN set -x \
 	&& apt-get update \
 	&& apt-get upgrade -y elasticsearch 
 #Can be used to overide startup script provided variables. 
-COPY default /etc/default/
+COPY default /etc/default
+#Elasticsearch config 
+COPY config /etc/elasticsearch
 
 WORKDIR /usr/share/elasticsearch
 #config, data & log volume mapping  ( minion : /opt/elasticsearch/* ).  

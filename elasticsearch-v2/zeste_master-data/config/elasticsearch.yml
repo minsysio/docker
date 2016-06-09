@@ -70,10 +70,10 @@ network.host: 0.0.0.0
 # The default list of hosts is ["127.0.0.1", "[::1]"]
 #
 # discovery.zen.ping.unicast.hosts: ["host1", "host2"]
-#
+discovery.zen.ping.unicast.hosts: ["elk_es1_1_zeste", "elk_es1_2_zeste", "elk_es1_3_zeste"]
 # Prevent the "split brain" by configuring the majority of nodes (total number of nodes / 2 + 1):
 #
-# discovery.zen.minimum_master_nodes: 3
+discovery.zen.minimum_master_nodes: 3
 #
 # For more information, see the documentation at:
 # <http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery.html>
@@ -82,7 +82,7 @@ network.host: 0.0.0.0
 #
 # Block initial recovery after a full cluster restart until N nodes are started:
 #
-# gateway.recover_after_nodes: 3
+gateway.recover_after_nodes: 3
 #
 # For more information, see the documentation at:
 # <http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-gateway.html>
