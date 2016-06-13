@@ -15,10 +15,10 @@ MAINTAINER Laurent Vincentelli <lvi@minsys.io>
 
 ENV DOMAIN_MSO cloud.minsys.io 
 
-RUN ./letsencrypt-auto certonly -a webroot --webroot-path=/usr/share/nginx/html -d labs.cloud.minsys.io -n -m support@minsys.io
-
- 
 WORKDIR /opt/letsencrypt
+
+RUN ./letsencrypt-auto certonly -a webroot --webroot-path=/usr/share/nginx/html -d $DOMAIN_MSO -n -m support@minsys.io --agree-tos
+
 #Directory where up to date cert + key are present. 
 VOLUME ["/etc/letsencrypt/live"]
 #Default input ports, list should grow with several inputs. 5200s are internal (LAN) inputs, 5300s are external (WAN)
