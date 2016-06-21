@@ -8,9 +8,11 @@ RUN set -x \
 	&& apt-get upgrade -y logstash
  
 WORKDIR /etc/logstash/conf.d
-#config : input/filter/output & ssl -Beats stack- volume mapping  ( minion : /opt/logstash/* ).  
-VOLUME ["/etc/logstash/conf.d", "/etc/logstash/ssl"]
+COPY conf.d .
+#config : input/filter/output & ssl volume mapping  ( minion : /opt/logstash/* ).  
+VOLUME ["/etc/logstash/conf.d", "/var/log/logstash", "/etc/pki/tls/certs", "/etc/pki/tls/private"]
 #Default input ports, list should grow with several inputs. 5200s are internal (LAN) inputs, 5300s are external (WAN)
-EXPOSE 5200 5300 
+#5301 exposed to siemprobe.
+EXPOSE 5301 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

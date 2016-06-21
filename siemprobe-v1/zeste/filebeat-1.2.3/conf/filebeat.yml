@@ -1,0 +1,41 @@
+filebeat:
+  prospectors:
+    -
+      paths:
+        - /var/log/minsys/suricata/eve.json
+      document_type: klima-suricata
+      input_type: log
+    -
+      paths:
+        - /var/log/minsys/suricata/netflow.json
+      document_type: klima-netflow
+      input_type: log
+    -
+      paths:
+        - /var/log/minsys/eventlog/eventlog.json
+      document_type: klima-eventlog
+      input_type: log
+    -
+      paths:
+        - /var/log/minsys/syslog/syslog.log
+      document_type: klima-syslog
+      input_type: log
+
+  registry_file: /var/lib/filebeat/registry
+
+
+output:
+  logstash:
+    enabled: true
+    hosts: ["logstash-klima.zesteinformatique.cloud.minsys.io:5301"]
+    tls:
+      certificate_authorities: ["/opt/filebeat/tls/logstash-filebeat.crt"]
+
+logging:
+  to_syslog: false
+  to_files: true
+  files:
+    path: /var/log/filebeat/
+    name: mybeat
+    keepfiles: 7
+  level: debug
