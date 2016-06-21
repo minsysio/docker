@@ -11,7 +11,7 @@ WORKDIR /etc/logstash/conf.d
 COPY conf.d .
 #config : input/filter/output & ssl volume mapping  ( minion : /opt/logstash/* ).  
 VOLUME ["/etc/logstash/conf.d", "/var/log/logstash", "/etc/pki/tls/certs", "/etc/pki/tls/private"]
-#Default input ports, list should grow with several inputs. 5200s are internal (LAN) inputs, 5300s are external (WAN)
+#Default input ports, list should grow with several inputs. 5200s are internal (LAN/MAN) inputs, 5300s are external (WAN)
 #5301 exposed to siemprobe.
 EXPOSE 5301 
 # Clean up APT when done.
