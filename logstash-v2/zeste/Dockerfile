@@ -6,10 +6,9 @@ MAINTAINER Laurent Vincentelli <lvi@minsys.io>
 RUN set -x \
 	&& apt-get update \
 	&& apt-get upgrade -y logstash
- 
-WORKDIR /etc/logstash/conf.d
-COPY conf.d .
-#config : input/filter/output & ssl volume mapping  ( minion : /opt/logstash/* ).  
+#Configuration to be copied :  
+COPY conf.d /etc/logstash/conf.d
+#Volume mapping - config : input/filter/output & ssl ( on minion : /opt/logstash/* ).  
 VOLUME ["/etc/logstash/conf.d", "/var/log/logstash", "/etc/pki/tls/certs", "/etc/pki/tls/private"]
 #Default input ports, list should grow with several inputs. 5200s are internal (LAN/MAN) inputs, 5300s are external (WAN)
 #5301 exposed to siemprobe.
