@@ -1,0 +1,7 @@
+server.port: 5601
+# The host to bind the server to. TO BE CHANGED TO LAN IP 
+server.host: "0.0.0.0"
+
+elasticsearch.url: "http://10.2.36.219:9200"
+
+kibana.index: ".kibana"
