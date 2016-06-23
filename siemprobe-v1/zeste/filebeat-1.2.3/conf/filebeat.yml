@@ -38,4 +38,4 @@ logging:
     path: /var/log/filebeat/
     name: mybeat
     keepfiles: 7
-  level: debug
+  level: error

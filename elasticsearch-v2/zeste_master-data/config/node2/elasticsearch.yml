@@ -1,0 +1,13 @@
+cluster.name: es-cluster_klima
+
+node.name: es02_klima
+node.master: true
+node.data: true
+node.rack: minion03
+
+path.data: /opt/elasticsearch/data
+path.logs: /opt/elastisearch/logs
+
+network.host: 10.2.139.3
+
+discovery.zen.ping.unicast.hosts: ["10.2.148.5", "10.2.139.3", "10.2.36.219"]
