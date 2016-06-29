@@ -1,0 +1,36 @@
+filebeat:
+
+#Kibana logs
+#Fail2ban 
+#auth.log  
+
+  prospectors:
+    -
+      paths:
+        - /var/log/fail2ban.log
+      document_type: system-kibana-fail2ban
+      input_type: log
+    -
+      paths:
+        - /var/log/fail2ban.log
+      document_type: system-kibana-fail2ban
+      input_type: log
+
+  registry_file: /var/lib/filebeat/registry
+
+
+output:
+  logstash:
+    enabled: true
+    hosts: ["logstash-klima.zesteinformatique.cloud.minsys.io:5201"]
+    tls:
+      certificate_authorities: ["/opt/filebeat/tls/logstash-filebeat.crt"]
+
+logging:
+  to_syslog: false
+  to_files: true
+  files:
+    path: /var/log/filebeat/
+    name: mybeat
+    keepfiles: 7
+  level: error
