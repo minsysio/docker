@@ -8,12 +8,12 @@ filebeat:
     -
       paths:
         - /var/log/fail2ban.log
-      document_type: system-kibana-fail2ban
+      document_type: system-minion-fail2ban
       input_type: log
     -
       paths:
-        - /var/log/fail2ban.log
-      document_type: system-kibana-fail2ban
+        - /var/log/kibana/kibana.stdout
+      document_type: system-kibana-logs 
       input_type: log
 
   registry_file: /var/lib/filebeat/registry
