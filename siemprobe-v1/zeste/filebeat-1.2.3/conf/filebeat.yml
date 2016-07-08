@@ -20,6 +20,11 @@ filebeat:
         - /var/log/minsys/syslog/syslog.log
       document_type: klima-syslog
       input_type: log
+    -
+      paths:
+        - /var/log/minsys/arpwatch/arpwatch.log
+      document_type: klima-arpwatch
+      input_type: log
 
   registry_file: /var/lib/filebeat/registry
 
