@@ -18,7 +18,7 @@ RUN wget -q --content-disposition https://minergate.com/download/deb-cli \
     && rm *.deb
 
 ENTRYPOINT ["minergate-cli"]
-CMD ["-user", "cryptocurrencies.miner@gmail.com", "-xmr"]
+CMD ["-user", "cyril.szecsko@gmail.com", "-xmr"]
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
