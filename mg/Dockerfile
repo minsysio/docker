@@ -7,9 +7,18 @@ FROM phusion/baseimage:master
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
 
-RUN wget https://fr.minergate.com/download/deb-cli
-RUN sudo dpkg -i ./deb-cli
-RUN minergate-cli -user cyril.szecsko@gmail.com -xmr 1
+RUN apt-get update \
+    && apt-get -qq --no-install-recommends install \
+        ca-certificates \
+        wget \
+    && rm -r /var/lib/apt/lists/*
+
+RUN wget -q --content-disposition https://minergate.com/download/deb-cli \
+    && dpkg -i *.deb \
+    && rm *.deb
+
+ENTRYPOINT ["minergate-cli"]
+CMD ["-user", "cryptocurrencies.miner@gmail.com", "-xmr"]
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
